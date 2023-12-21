@@ -100,7 +100,6 @@ const QuestionPage = props => {
     }
 
     setSong(arr);
-    console.log('called');
   };
   const [right, setRight] = useState([]);
   const [rendomdat, setrandomDat] = useState(data.slice(0, 4));
@@ -109,13 +108,13 @@ const QuestionPage = props => {
 
     let traxck;
     let track2;
-    let wrongnum = Math.floor(Math.random() * 5);
+    let wrongnum = Math.floor(Math.random() * 4);
     WrongVoid.sort(() => Math.random() - 0.5).map((item, index) => {
       if (index == wrongnum) {
         traxck = item;
       }
     });
-    let rightnum = Math.floor(Math.random() * 8);
+    let rightnum = Math.floor(Math.random() * 7);
     RightVOid.sort(() => Math.random() - 0.5).map((item, index) => {
       if (index == rightnum) {
         track2 = item;
