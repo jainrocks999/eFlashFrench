@@ -49,8 +49,8 @@ const MyStack = () => {
     await TrackPlayer.reset();
     let track = {
       url: require('../../asset2/babyflashtheme.mp3'), // Load media from the file system
-      title: 'Ice Age',
-      artist: 'deadmau5',
+      title: 'eFlashThem',
+      artist: 'eFlashApps',
       // Load artwork from the file system:
       //artwork: `asset:/files/${item.Sound}`,
       duration: null,

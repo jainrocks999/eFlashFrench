@@ -31,11 +31,12 @@ const requestOption = {
 const QuestionPage = props => {
   const interstitial = InterstitialAd.createForAdRequest(authId, requestOption);
   const tablet = isTablet();
+  const backSound = useSelector(state => state.backSound);
   const disapatch = useDispatch();
   useEffect(() => {
     const backAction = async () => {
       await TrackPlayer.reset();
-      navigation.dispatch(StackActions.popToTop());
+      navigation.reset({index: 0, routes: [{name: 'home'}]});
       return true;
     };
 
@@ -159,7 +160,6 @@ const QuestionPage = props => {
   useEffect(() => {
     run();
   }, [rendomdat]);
-  console.log('this is canclelbe', canlable);
 
   const run = async () => {
     await TrackPlayer.reset();
@@ -172,10 +172,17 @@ const QuestionPage = props => {
     });
   };
   useEffect(() => {
-    setTimeout(() => {
-      page ? sound() : null;
-    }, 500);
-  }, [canlable]);
+    backSound.fromQuestion
+      ? setTimeout(() => {
+          sound();
+          disapatch({
+            type: 'backSoundFromquestions/playWhenThePage',
+            fromDetails: false,
+            fromQuestion: false,
+          });
+        }, 500)
+      : null;
+  }, [backSound.fromQuestion == true]);
 
   const sound = async () => {
     await TrackPlayer.reset();
@@ -185,7 +192,11 @@ const QuestionPage = props => {
 
   const gotoSettings = async () => {
     await TrackPlayer.reset();
-    disapatch(addPagable(false));
+    disapatch({
+      type: 'backSoundFromquestions/playWhenThePage',
+      fromDetails: false,
+      fromQuestion: false,
+    });
     navigation.dispatch(StackActions.push('setting', {pr: 'question'}));
   };
   return (
@@ -196,7 +207,7 @@ const QuestionPage = props => {
             onPress={async () => {
               await TrackPlayer.reset();
               disapatch(addPagable(false));
-              navigation.dispatch(StackActions.popToTop());
+              navigation.reset({index: 0, routes: [{name: 'home'}]});
             }}>
             <Image
               style={styles.icon}
@@ -338,7 +349,7 @@ const styles = StyleSheet.create({
   },
   mobileView: {
     height: hp(30),
-    width: hp(24),
+    width: hp(22),
     marginHorizontal: wp(1.5),
     marginVertical: hp(4),
     alignItems: 'center',

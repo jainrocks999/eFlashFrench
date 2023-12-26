@@ -1,4 +1,10 @@
-import {StyleSheet, AppState, Alert, BackHandler} from 'react-native';
+import {
+  StyleSheet,
+  AppState,
+  Alert,
+  BackHandler,
+  StatusBar,
+} from 'react-native';
 import React, {useEffect, useRef, useState} from 'react';
 import MyStack from './src/components/MyStack';
 import {Provider} from 'react-redux';
@@ -80,6 +86,7 @@ const App = () => {
 
   return (
     <Provider store={myStore}>
+      <StatusBar backgroundColor="#73cbea" />
       <MyStack />
     </Provider>
   );

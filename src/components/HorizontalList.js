@@ -14,8 +14,12 @@ const HorizontalList = ({items}) => {
   const disapatch = useDispatch();
   const data = useSelector(state => state.Items);
   const getData = (cat, id) => {
-    console.log('run');
     if (cat != 'link' && cat != 'link2') {
+      disapatch({
+        type: 'backSoundFromquestions/playWhenThePage',
+        fromDetails: false,
+        fromQuestion: false,
+      });
       db.transaction(tx => {
         tx.executeSql(
           'SELECT * FROM tbl_items WHERE Category=? ',

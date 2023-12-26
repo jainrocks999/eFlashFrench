@@ -6,6 +6,7 @@ import SoundSlice from './Slice4';
 import Slice5 from './Slice5';
 import Slicer6 from './Slicer6';
 import Slicer7 from './Slice7';
+import backSound from './backSound';
 
 const myStore = configureStore({
   reducer: {
@@ -16,6 +17,7 @@ const myStore = configureStore({
     cancle: Slice5,
     page: Slicer6,
     catdata: Slicer7,
+    backSound,
   },
 });
 export default myStore;

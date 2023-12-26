@@ -22,6 +22,7 @@ const Card = ({item, onPress}) => {
       activeOpacity={0.8}>
       <Image
         style={{height: '100%', width: '100%', resizeMode: 'cover'}}
+        resizeMode="contain"
         source={item.Image}
       />
     </TouchableOpacity>

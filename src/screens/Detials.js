@@ -38,6 +38,7 @@ const requestOption = {
 };
 const Detials = props => {
   const tablet = isTablet();
+  const backSound = useSelector(state => state.backSound);
   const disapatch = useDispatch();
   const canlable = useSelector(state => state.cancle);
   const page = useSelector(state => state.page);
@@ -47,7 +48,7 @@ const Detials = props => {
       await TrackPlayer.reset();
       disapatch(addPagable(false));
 
-      navigation.dispatch(StackActions.popToTop());
+      navigation.reset({index: 0, routes: [{name: 'home'}]});
       return true;
     };
 
@@ -142,16 +143,16 @@ const Detials = props => {
           console.log('this issome', Imagess);
           track = {
             url: `asset:/files/${item.Sound.replace(/\s+/g, '_').trim()}`, // Load media from the file system
-            title: 'Ice Age',
-            artist: 'deadmau5',
+            title: Titel,
+            artist: 'eFlashApps',
             // Load artwork from the file system:
             artwork: `asset:/files/${item.Sound.replace(/\s+/g, '_').trim()}`,
             duration: null,
           };
           track2 = {
             url: `asset:/files/${item.ActualSound.replace(/-/g, '_').trim()}`, // Load media from the file system
-            title: 'Ice Age',
-            artist: 'deadmau5',
+            title: Titel,
+            artist: 'eFlashApps',
             // Load artwork from the file system:
             artwork: `asset:/files/${item.Sound}`,
             duration: null,
@@ -189,8 +190,15 @@ const Detials = props => {
   };
 
   useEffect(() => {
-    page ? paly() : null;
-  }, [canlable]);
+    if (backSound.fromDetails) {
+      paly();
+      disapatch({
+        type: 'backSoundFromquestions/playWhenThePage',
+        fromDetails: false,
+        fromQuestion: false,
+      });
+    }
+  }, [backSound.fromDetails == true]);
   const paly = async () => {
     await TrackPlayer.reset();
     await TrackPlayer.add(Music);
@@ -208,7 +216,7 @@ const Detials = props => {
             onPress={async () => {
               await TrackPlayer.reset();
               disapatch(addPagable(false));
-              navigation.dispatch(StackActions.popToTop());
+              navigation.reset({index: 0, routes: [{name: 'home'}]});
             }}>
             <Image
               style={styles.icon}
@@ -219,7 +227,11 @@ const Detials = props => {
           <TouchableOpacity
             onPress={async () => {
               await TrackPlayer.reset();
-              disapatch(addPagable(false));
+              disapatch({
+                type: 'backSoundFromquestions/playWhenThePage',
+                fromDetails: false,
+                fromQuestion: false,
+              });
               navigation.dispatch(
                 StackActions.push('setting', {pr: 'details'}),
               );
@@ -250,7 +262,8 @@ const Detials = props => {
             <TouchableOpacity
               onPress={async () => {
                 setCount(count - 1);
-              }}>
+              }}
+              disabled={count <= 0 ? true : false}>
               <Image
                 style={[
                   styles.btn,

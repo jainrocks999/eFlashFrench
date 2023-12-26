@@ -52,8 +52,8 @@ const Header = ({onPress, onPress2, mute, home}) => {
     await TrackPlayer.reset();
     let track = {
       url: require('../../asset2/babyflashtheme.mp3'), // Load media from the file system
-      title: 'Ice Age',
-      artist: 'deadmau5',
+      title: 'EFlashThem',
+      artist: 'EflashApps',
       duration: null,
     };
     if (isReady) {
