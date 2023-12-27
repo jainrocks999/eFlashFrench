@@ -1,7 +1,7 @@
 import {View, Text, Image, StyleSheet} from 'react-native';
 import React, {useState} from 'react';
 import {TouchableOpacity} from 'react-native';
-import {height, width} from './Diemenstions';
+
 import {isTablet} from 'react-native-device-info';
 const Switch = ({style, text, sw, onPress, ...props}) => {
   const [TogleSwitch, setTougleSwit] = useState(false);
@@ -19,6 +19,7 @@ const Switch = ({style, text, sw, onPress, ...props}) => {
               ? require('../../Assets4/on.png')
               : require('../../Assets4/off.png')
           }
+          resizeMode="contain"
         />
       </TouchableOpacity>
     </View>

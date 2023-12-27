@@ -18,8 +18,7 @@ import {QuestionMode} from '../reduxToolkit/Slice3';
 import {addSetting} from '../reduxToolkit/Slice2';
 import {StackActions, useNavigation} from '@react-navigation/native';
 import Header from '../components/Header';
-import {addCancleble} from '../reduxToolkit/Slice5';
-import {addPagable} from '../reduxToolkit/Slicer6';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 var SQLite = require('react-native-sqlite-storage');
 import {
   heightPercentageToDP as hp,
@@ -30,13 +29,7 @@ const db = SQLite.openDatabase({
   createFromLocation: 1,
 });
 import {isTablet} from 'react-native-device-info';
-import {
-  TestIds,
-  InterstitialAd,
-  AdEventType,
-  GAMBannerAd,
-  BannerAdSize,
-} from 'react-native-google-mobile-ads';
+import {GAMBannerAd, BannerAdSize} from 'react-native-google-mobile-ads';
 import {Addsid} from './ads';
 const SettingScreen = props => {
   const muted = useSelector(state => state.sound);
@@ -107,8 +100,16 @@ const SettingScreen = props => {
     }
     await TrackPlayer.reset();
   };
-  //SELECT * FROM tbl_settings
-
+  const getPrevSetting = async mode => {
+    let res = await AsyncStorage.getItem('setting');
+    const newVal = await JSON.parse(res);
+    if (mode == false) {
+      setToggleSwich(newVal);
+    } else {
+      await AsyncStorage.setItem('setting', JSON.stringify(togleSwitch));
+      setToggleSwich(pre => false);
+    }
+  };
   const updateSettings = () => {
     db.transaction(tx => {
       tx.executeSql(
@@ -176,7 +177,8 @@ const SettingScreen = props => {
                 text="Ouestion mode"
                 style={styles.sw}
                 onPress={() => {
-                  setquestion(!questionMode), setToggleSwich(pre => false);
+                  setquestion(!questionMode);
+                  getPrevSetting(!questionMode);
                 }}
                 onFocus={() => {
                   console.log('rrrj');
@@ -249,14 +251,16 @@ const SettingScreen = props => {
               }
             }}>
             <Image
-              style={{height: hp(6), width: wp(30)}}
+              style={{height: hp(7), width: wp(35)}}
               source={require('../../Assets4/btncancel_normal.png')}
+              resizeMode="contain"
             />
           </TouchableOpacity>
           <TouchableOpacity onPress={() => Save()}>
             <Image
-              style={{height: hp(6), width: wp(30)}}
+              style={{height: hp(7), width: wp(35)}}
               source={require('../../Assets4/btnsave_normal.png')}
+              resizeMode="contain"
             />
           </TouchableOpacity>
         </View>

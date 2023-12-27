@@ -1,5 +1,12 @@
-import {View, Text, Image, TouchableOpacity, BackHandler} from 'react-native';
-import React, {useEffect, useState} from 'react';
+import {
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  BackHandler,
+  AppState,
+} from 'react-native';
+import React, {useEffect, useRef, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {FlatList, ScrollView} from 'react-native-gesture-handler';
 import {height, width} from '../components/Diemenstions';
@@ -171,6 +178,7 @@ const QuestionPage = props => {
       }
     });
   };
+
   useEffect(() => {
     backSound.fromQuestion
       ? setTimeout(() => {
@@ -212,12 +220,14 @@ const QuestionPage = props => {
             <Image
               style={styles.icon}
               source={require('../../Assets4/btnhome_normal.png')}
+              resizeMode="contain"
             />
           </TouchableOpacity>
           <TouchableOpacity onPress={() => sound()}>
             <Image
               style={styles.btn2}
               source={require('../../Assets4/btnrepeat_normal.png')}
+              resizeMode="contain"
             />
           </TouchableOpacity>
           <TouchableOpacity
@@ -227,14 +237,16 @@ const QuestionPage = props => {
             <Image
               style={styles.icon}
               source={require('../../Assets4/btnsetting_normal.png')}
+              resizeMode="contain"
             />
           </TouchableOpacity>
         </View>
         <View
           style={{
-            marginTop: tablet ? '5%' : '15%',
+            marginTop: tablet ? '5%' : '5%',
             alignSelf: 'center',
             alignItems: 'center',
+            paddingLeft: '2%',
           }}>
           <FlatList
             data={rendomdat}
@@ -250,18 +262,19 @@ const QuestionPage = props => {
                   <Image
                     style={{height: '100%', width: '100%'}}
                     source={{uri: `asset:/files/${item.Image}`}}
+                    resizeMode="stretch"
                   />
                   {right.includes(index) ? (
                     <Image
                       style={[
                         {
                           position: 'absolute',
-                          height: hp(30),
-                          width: hp(24),
-                          bottom: 10,
+                          height: '100%',
+                          width: '100%',
                         },
                       ]}
                       source={require('../../Assets4/rightselection.png')}
+                      resizeMode="stretch"
                     />
                   ) : null}
                   {wrong.includes(index) ? (
@@ -269,11 +282,12 @@ const QuestionPage = props => {
                       style={[
                         {
                           position: 'absolute',
-                          height: hp(30),
-                          width: hp(24),
+                          height: '100%',
+                          width: '100%',
                           bottom: 15,
                         },
                       ]}
+                      resizeMode="stretch"
                       source={require('../../Assets4/wrongselection.png')}
                     />
                   ) : null}
@@ -348,11 +362,10 @@ const styles = StyleSheet.create({
     bottom: hp(10),
   },
   mobileView: {
-    height: hp(30),
-    width: hp(22),
-    marginHorizontal: wp(1.5),
-    marginVertical: hp(4),
-    alignItems: 'center',
+    height: hp(38),
+    width: '46%',
+    marginHorizontal: '1.5%',
+    marginVertical: '1.5%',
   },
   tabView: {
     height: hp(38),

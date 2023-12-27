@@ -6,7 +6,7 @@ const SplashScreen = () => {
   const navigation = useNavigation();
   useEffect(() => {
     setTimeout(() => {
-      navigation.dispatch(StackActions.replace('home'));
+      navigation.reset({index: 0, routes: [{name: 'home'}]});
     }, 2000);
   });
   return (
@@ -14,6 +14,7 @@ const SplashScreen = () => {
       <Image
         style={{height: '100%', width: '100%'}}
         source={require('../../Assets4/splash.png')}
+        resizeMode="stretch"
       />
     </View>
   );

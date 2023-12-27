@@ -10,7 +10,7 @@ import {
   FileSystem,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import {height, width} from '../components/Diemenstions';
+import {height} from '../components/Diemenstions';
 import TrackPlayer from 'react-native-track-player';
 import {setupPlayer} from '../components/Setup';
 import GestureRecognizer from 'react-native-swipe-gestures';
@@ -40,8 +40,7 @@ const Detials = props => {
   const tablet = isTablet();
   const backSound = useSelector(state => state.backSound);
   const disapatch = useDispatch();
-  const canlable = useSelector(state => state.cancle);
-  const page = useSelector(state => state.page);
+
   const interstitial = InterstitialAd.createForAdRequest(adUnit, requestOption);
   useEffect(() => {
     const backAction = async () => {
@@ -133,38 +132,40 @@ const Detials = props => {
     const indexx = Math.floor(Math.random() * numbers.length);
     let y = data.length;
     if (count >= 0 && count <= y - 1) {
-      newData.map(async (item, index) => {
-        if (index == count) {
-          Titel = item.Title;
-          console.log(item.Sound);
-          Imagess = `asset:/files/${item.Image.replace(/\s+/g, ' ')
-            .trim()
-            .toLowerCase()}`;
-          console.log('this issome', Imagess);
-          track = {
-            url: `asset:/files/${item.Sound.replace(/\s+/g, '_').trim()}`, // Load media from the file system
-            title: Titel,
-            artist: 'eFlashApps',
-            // Load artwork from the file system:
-            artwork: `asset:/files/${item.Sound.replace(/\s+/g, '_').trim()}`,
-            duration: null,
-          };
-          track2 = {
-            url: `asset:/files/${item.ActualSound.replace(/-/g, '_').trim()}`, // Load media from the file system
-            title: Titel,
-            artist: 'eFlashApps',
-            // Load artwork from the file system:
-            artwork: `asset:/files/${item.Sound}`,
-            duration: null,
-          };
-          ActualSound = item.ActualSound.replace(/-/g, '_').trim();
-        }
-      });
+      Titel = newData[count].Title;
+      Imagess = `asset:/files/${newData[count].Image.replace(/\s+/g, ' ')
+        .trim()
+        .toLowerCase()}`;
+      track = {
+        url: `asset:/files/${newData[count].Sound.replace(/\s+/g, '_').trim()}`, // Load media from the file system
+        title: Titel,
+        artist: 'eFlashApps',
+        // Load artwork from the file system:
+        artwork: `asset:/files/${newData[count].Sound.replace(
+          /\s+/g,
+          '_',
+        ).trim()}`,
+        duration: null,
+      };
+      track2 = {
+        url: `asset:/files/${newData[count].ActualSound.replace(
+          /-/g,
+          '_',
+        ).trim()}`, // Load media from the file system
+        title: Titel,
+        artist: 'eFlashApps',
+        // Load artwork from the file system:
+        artwork: `asset:/files/${newData[count].Sound}`,
+        duration: null,
+      };
+      ActualSound = newData[count].ActualSound.replace(/-/g, '_').trim();
     } else if (count < 0) {
       navigation.goBack();
+      return;
     } else {
       getAdd();
       navigation.dispatch(StackActions.replace('next'));
+      return;
     }
 
     setTitle(Titel);
@@ -176,7 +177,7 @@ const Detials = props => {
     } else {
       setMusic(track);
     }
-    console.log('this is actusl sound', ActualSound);
+
     if (isSetup) {
       if (ActualSound != '' && setting.ActualVoice && setting.Voice) {
         await TrackPlayer.add([track2, track]);
@@ -208,8 +209,10 @@ const Detials = props => {
   return (
     <GestureRecognizer
       style={{flex: 1}}
-      onSwipeLeft={() => setting.Swipe && setCount(count + 1)}
-      onSwipeRight={() => setting.Swipe && setCount(count - 1)}>
+      onSwipeLeft={() =>
+        setting.Swipe && count != data.length && setCount(count + 1)
+      }
+      onSwipeRight={() => setting.Swipe && count > 0 && setCount(count - 1)}>
       <View style={{flex: 1, backgroundColor: 'white'}}>
         <View style={styles.header}>
           <TouchableOpacity
@@ -221,9 +224,10 @@ const Detials = props => {
             <Image
               style={styles.icon}
               source={require('../../Assets4/btnhome_normal.png')}
+              resizeMode="contain"
             />
           </TouchableOpacity>
-          <Text style={styles.Titel}>{setting.English && Title}</Text>
+          <Text style={styles.Titel}>{setting.English ? Title : ''}</Text>
           <TouchableOpacity
             onPress={async () => {
               await TrackPlayer.reset();
@@ -239,6 +243,7 @@ const Detials = props => {
             <Image
               style={styles.icon}
               source={require('../../Assets4/btnsetting_normal.png')}
+              resizeMode="contain"
             />
           </TouchableOpacity>
         </View>
@@ -254,6 +259,7 @@ const Detials = props => {
                 uri: Images,
                 //asset:/files/${'b'.replace(/\s+/g, ' ').trim()}.png
               }}
+              resizeMode="stretch"
             />
           )}
         </View>
@@ -273,6 +279,7 @@ const Detials = props => {
                   },
                 ]}
                 source={require('../../Assets4/btnprevious_normal.png')}
+                resizeMode="contain"
               />
             </TouchableOpacity>
           )}
@@ -283,13 +290,15 @@ const Detials = props => {
             <Image
               style={[styles.btn2, setting.Swipe && {marginLeft: '60%'}]}
               source={require('../../Assets4/btnrepeat_normal.png')}
+              resizeMode="contain"
             />
           </TouchableOpacity>
           {!setting.Swipe && (
             <TouchableOpacity
               onPress={async () => {
                 setCount(count + 1);
-              }}>
+              }}
+              disabled={count == data.length ? true : false}>
               <Image
                 style={[
                   styles.btn,
@@ -299,6 +308,7 @@ const Detials = props => {
                   },
                 ]}
                 source={require('../../Assets4/btnnext_normal.png')}
+                resizeMode="contain"
               />
             </TouchableOpacity>
           )}
