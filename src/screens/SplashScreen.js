@@ -14,7 +14,6 @@ const SplashScreen = () => {
       <Image
         style={{height: '100%', width: '100%'}}
         source={require('../../Assets4/splash.png')}
-        resizeMode="stretch"
       />
     </View>
   );

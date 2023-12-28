@@ -59,7 +59,7 @@ const Detials = props => {
     return () => backHandler.remove();
   }, []);
   const [Images, setImages] = useState('');
-  const [Title, setTitle] = useState();
+  const [Title, setTitle] = useState({English: '', French: ''});
   const [count, setCount] = useState(0);
   const [Music, setMusic] = useState();
   const navigation = useNavigation();
@@ -132,13 +132,13 @@ const Detials = props => {
     const indexx = Math.floor(Math.random() * numbers.length);
     let y = data.length;
     if (count >= 0 && count <= y - 1) {
-      Titel = newData[count].Title;
+      Titel = {English: newData[count].Title, French: newData[count].English};
       Imagess = `asset:/files/${newData[count].Image.replace(/\s+/g, ' ')
         .trim()
         .toLowerCase()}`;
       track = {
         url: `asset:/files/${newData[count].Sound.replace(/\s+/g, '_').trim()}`, // Load media from the file system
-        title: Titel,
+        title: Titel.English,
         artist: 'eFlashApps',
         // Load artwork from the file system:
         artwork: `asset:/files/${newData[count].Sound.replace(
@@ -152,7 +152,7 @@ const Detials = props => {
           /-/g,
           '_',
         ).trim()}`, // Load media from the file system
-        title: Titel,
+        title: Titel.French,
         artist: 'eFlashApps',
         // Load artwork from the file system:
         artwork: `asset:/files/${newData[count].Sound}`,
@@ -227,7 +227,23 @@ const Detials = props => {
               resizeMode="contain"
             />
           </TouchableOpacity>
-          <Text style={styles.Titel}>{setting.English ? Title : ''}</Text>
+          <View
+            style={{
+              alignItems: 'center',
+              height: '100%',
+              justifyContent: 'center',
+            }}>
+            <Text style={styles.Titel}>
+              {setting.English ? Title.French : ''}
+            </Text>
+            <Text
+              style={[
+                styles.Titel,
+                {fontSize: wp(4), fontWeight: '500', marginTop: hp(0.1)},
+              ]}>
+              {setting.English ? Title.English : ''}
+            </Text>
+          </View>
           <TouchableOpacity
             onPress={async () => {
               await TrackPlayer.reset();
@@ -259,7 +275,7 @@ const Detials = props => {
                 uri: Images,
                 //asset:/files/${'b'.replace(/\s+/g, ' ').trim()}.png
               }}
-              resizeMode="stretch"
+              resizeMode="contain"
             />
           )}
         </View>
@@ -343,7 +359,7 @@ const styles = StyleSheet.create({
     margin: 5,
   },
   Titel: {
-    fontSize: wp(6),
+    fontSize: wp(5.5),
     fontWeight: 'bold',
     color: 'white',
     alignSelf: 'center',

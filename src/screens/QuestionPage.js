@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import React, {useEffect, useRef, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {FlatList, ScrollView} from 'react-native-gesture-handler';
+import {FlatList, RectButton, ScrollView} from 'react-native-gesture-handler';
 import {height, width} from '../components/Diemenstions';
 import {StyleSheet} from 'react-native';
 import {setupPlayer} from '../components/Setup';
@@ -88,15 +88,15 @@ const QuestionPage = props => {
     let arr = [
       (track = {
         url: require('../../asset2/clickon.mp3'), // Load media from the file system
-        title: 'Ice Age',
-        artist: 'deadmau5',
+        title: 'clickon',
+        artist: 'eFlashApps',
 
         duration: null,
       }),
       (track2 = {
         url: `asset:/files/${item.Sound.replace(/\s+/g, '_').trim()}`, // Load media from the file system
-        title: 'Ice Age',
-        artist: 'deadmau5',
+        title: item.Title,
+        artist: 'eFlashApps',
         // Load artwork from the file system:
         //  artwork: require('../../asset2/clickon.mp3'),
         duration: null,
@@ -109,6 +109,7 @@ const QuestionPage = props => {
 
     setSong(arr);
   };
+
   const [right, setRight] = useState([]);
   const [rendomdat, setrandomDat] = useState(data.slice(0, 4));
   const up = async indexx => {
@@ -258,11 +259,18 @@ const QuestionPage = props => {
                   onPress={() => {
                     up(index);
                   }}
-                  style={[!tablet ? styles.mobileView : styles.tabView]}>
+                  style={[!tablet ? styles.mobileView : styles.tabView]}
+                  disabled={
+                    right.length > 0 || wrong.includes(index) ? true : false
+                  }>
                   <Image
                     style={{height: '100%', width: '100%'}}
-                    source={{uri: `asset:/files/${item.Image}`}}
-                    resizeMode="stretch"
+                    source={{
+                      uri: `asset:/files/${item.Image.replace(/\s+/g, ' ')
+                        .trim()
+                        .toLowerCase()}`,
+                    }}
+                    resizeMode="contain"
                   />
                   {right.includes(index) ? (
                     <Image
@@ -274,7 +282,7 @@ const QuestionPage = props => {
                         },
                       ]}
                       source={require('../../Assets4/rightselection.png')}
-                      resizeMode="stretch"
+                      resizeMode="contain"
                     />
                   ) : null}
                   {wrong.includes(index) ? (
@@ -287,7 +295,7 @@ const QuestionPage = props => {
                           bottom: 15,
                         },
                       ]}
-                      resizeMode="stretch"
+                      resizeMode="contain"
                       source={require('../../Assets4/wrongselection.png')}
                     />
                   ) : null}

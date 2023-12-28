@@ -70,10 +70,12 @@ const Header = ({onPress, onPress2, mute, home}) => {
         height: height / 12,
         flexDirection: 'row',
         justifyContent: 'space-between',
+        marginHorizontal: wp(2),
+        marginTop: hp(0.5),
       }}>
       <TouchableOpacity onPress={onPress2}>
         <Image
-          style={{height: hp(7), width: hp(7), margin: '1%'}}
+          style={{height: hp(7), width: hp(7)}}
           source={
             mt
               ? require('../../Assets4/btnsseakar.png')
@@ -85,7 +87,7 @@ const Header = ({onPress, onPress2, mute, home}) => {
       {home && (
         <TouchableOpacity onPress={onPress}>
           <Image
-            style={{height: hp(7), width: hp(7), margin: '1%'}}
+            style={{height: hp(7), width: hp(7)}}
             source={require('../../Assets4/btnsetting_normal.png')}
             resizeMode="contain"
           />
