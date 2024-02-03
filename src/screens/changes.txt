@@ -1,3 +1,5 @@
  1. sound  {"ActualSound": "act-polar bear.mp3", "Category": "Animal", "English": "Ours Polaire", "Image": "polarbear.jpg", "Sound": "polar bear.mp3", "Title": "Polar Bear", "_id": 130}
  2. image in wrong {"ActualSound": "", "Category": "BodyParts", "English": "Poignet", "Image": "a.png", "Sound": "wrist.mp3", "Title": "Wrist", "_id": 305}
  3. sound {"ActualSound": "", "Category": "Clothing", "English": "Couverture", "Image": "blanket.jpg", "Sound": "blanket", "Title": "Blanket", "_id": 154}
+
+ [{"ActualSound": "", "Category": "BodyParts", "English": "Cheville", "Image": "ankle.jpg", "Sound": "ankle.mp3", "Title": "Ankle", "_id": 274}, {"ActualSound": "", "Category": "BodyParts", "English": "Bras", "Image": "Arm.jpg", "Sound": "arm.mp3", "Title": "Arm", "_id": 275}, {"ActualSound": "", "Category": "BodyParts", "English": "Dos", "Image": "back.jpg", "Sound": "back.mp3", "Title": "Back", "_id": 276}, {"ActualSound": "", "Category": "BodyParts", "English": "Nombril", "Image": "bellyButton.jpg", "Sound": "belly button.mp3", "Title": "Belly Button", "_id": 277}]
