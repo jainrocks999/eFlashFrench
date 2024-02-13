@@ -8,8 +8,13 @@ import {useNavigation} from '@react-navigation/native';
 var SQLite = require('react-native-sqlite-storage');
 import {addSetting} from '../reduxToolkit/Slice2';
 import {QuestionMode} from '../reduxToolkit/Slice3';
-import {GAMBannerAd, BannerAdSize} from 'react-native-google-mobile-ads';
+import {
+  GAMBannerAd,
+  BannerAd,
+  BannerAdSize,
+} from 'react-native-google-mobile-ads';
 import {Addsid} from './ads';
+import {SafeAreaView} from 'react-native-safe-area-context';
 const db = SQLite.openDatabase({
   name: 'eFlashFrench.db',
   createFromLocation: 1,
@@ -43,24 +48,26 @@ const Home = () => {
   };
 
   return (
-    <ImageBackground
-      style={{flex: 1}}
-      source={require('../../Assets4/bgnewcategory.png')}>
-      <Header
-        onPress2={() => setMute(!mute)}
-        mute={mute}
-        onPress={() => Navigation.navigate('setting', {pr: 'home'})}
-        home
-      />
-      <HorizontalList items={MyData} />
-      <GAMBannerAd
-        unitId={Addsid.BANNER}
-        sizes={[BannerAdSize.FULL_BANNER]}
-        requestOptions={{
-          requestNonPersonalizedAdsOnly: true,
-        }}
-      />
-    </ImageBackground>
+    <SafeAreaView style={{flex: 1, backgroundColor: '#73cbea'}}>
+      <ImageBackground
+        style={{flex: 1}}
+        source={require('../../Assets4/bgnewcategory.png')}>
+        <Header
+          onPress2={() => setMute(!mute)}
+          mute={mute}
+          onPress={() => Navigation.navigate('setting', {pr: 'home'})}
+          home
+        />
+        <HorizontalList items={MyData} />
+        <BannerAd
+          unitId={Addsid.BANNER}
+          sizes={[BannerAdSize.FULL_BANNER]}
+          requestOptions={{
+            requestNonPersonalizedAdsOnly: true,
+          }}
+        />
+      </ImageBackground>
+    </SafeAreaView>
   );
 };
 

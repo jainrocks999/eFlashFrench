@@ -4,6 +4,7 @@ import {
   Alert,
   BackHandler,
   StatusBar,
+  LogBox,
 } from 'react-native';
 import React, {useEffect, useRef, useState} from 'react';
 import MyStack from './src/components/MyStack';
@@ -12,6 +13,7 @@ import myStore from './src/reduxToolkit/MyStore';
 import {InterstitialAd, AdEventType} from 'react-native-google-mobile-ads';
 import {Addsid} from './src/screens/ads';
 const App = () => {
+  LogBox.ignoreAllLogs();
   const appState = useRef(AppState.currentState);
   const interstitial = InterstitialAd.createForAdRequest(Addsid.Interstitial, {
     requestNonPersonalizedAdsOnly: true,

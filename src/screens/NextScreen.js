@@ -25,11 +25,7 @@ const db = SQLite.openDatabase({
   name: 'eFlashFrench.db',
   createFromLocation: 1,
 });
-import {
-  GAMBannerAd,
-  BannerAdSize,
-  TestIds,
-} from 'react-native-google-mobile-ads';
+import {BannerAd, BannerAdSize, TestIds} from 'react-native-google-mobile-ads';
 import {Addsid} from './ads';
 const NextScreen = ({route}) => {
   const navigation = useNavigation();
@@ -81,7 +77,7 @@ const NextScreen = ({route}) => {
 
   const [mute, setMut] = useState(muted);
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <SafeAreaView style={{flex: 1, backgroundColor: '#73cbea'}}>
       <ImageBackground
         style={{flex: 1}}
         source={require('../../Assets4/setting_screen.png')}>
@@ -183,7 +179,7 @@ const NextScreen = ({route}) => {
         </View>
 
         <View style={{position: 'absolute', bottom: 0}}>
-          <GAMBannerAd
+          <BannerAd
             unitId={Addsid.BANNER}
             sizes={[BannerAdSize.FULL_BANNER]}
             requestOptions={{
