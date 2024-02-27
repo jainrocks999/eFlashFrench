@@ -4,7 +4,7 @@ import {
   AdEventType,
 } from 'react-native-google-mobile-ads';
 export const Addsid = {
-  BANNER: 'ca-app-pub-3339897183017333/1151216388',
+  BANNER: 'ca-app-pub-3339897183017333/6918548388',
 
-  Interstitial: 'ca-app-pub-3339897183017333/8674483181',
+  Interstitial: 'ca-app-pub-3339897183017333/7737334781',
 };

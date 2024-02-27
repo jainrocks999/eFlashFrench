@@ -162,6 +162,7 @@ const SettingScreen = props => {
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#73cbea'}}>
       <ImageBackground
+        resizeMode="stretch"
         style={{flex: 1}}
         source={require('../../Assets4/setting_screen.png')}>
         <Header onPress2={() => setMute(!mute)} mute={mute} />
@@ -175,7 +176,7 @@ const SettingScreen = props => {
               style={{flex: 1}}
               source={require('../../Assets4/settingpagebase.png')}>
               <View
-                style={{marginTop: tablet ? '7%' : '10%', marginLeft: '5%'}}>
+                style={{marginTop: tablet ? '5%' : '10%', marginLeft: '5%'}}>
                 <Switch
                   text="Question mode"
                   style={styles.sw}
@@ -268,7 +269,7 @@ const SettingScreen = props => {
             </TouchableOpacity>
           </View>
         </ScrollView>
-        <View style={{position: 'absolute', bottom: 0}}>
+        <View style={{position: 'absolute', bottom: 0, alignSelf: 'center'}}>
           <GAMBannerAd
             unitId={Addsid.BANNER}
             sizes={[BannerAdSize.FULL_BANNER]}
@@ -287,7 +288,7 @@ const styles = StyleSheet.create({
   settingContainer: {
     borderWidth: 2,
     marginTop: '40%',
-    height: height / 2.2,
+    height: height / 2,
     margin: '5%',
   },
   sw: {

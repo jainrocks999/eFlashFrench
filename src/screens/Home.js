@@ -1,4 +1,4 @@
-import {StyleSheet, ImageBackground} from 'react-native';
+import {StyleSheet, ImageBackground, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import HorizontalList from '../components/HorizontalList';
@@ -15,6 +15,7 @@ import {
 } from 'react-native-google-mobile-ads';
 import {Addsid} from './ads';
 import {SafeAreaView} from 'react-native-safe-area-context';
+
 const db = SQLite.openDatabase({
   name: 'eFlashFrench.db',
   createFromLocation: 1,
@@ -59,13 +60,15 @@ const Home = () => {
           home
         />
         <HorizontalList items={MyData} />
-        <BannerAd
-          unitId={Addsid.BANNER}
-          sizes={[BannerAdSize.FULL_BANNER]}
-          requestOptions={{
-            requestNonPersonalizedAdsOnly: true,
-          }}
-        />
+        <View style={{alignSelf: 'center'}}>
+          <BannerAd
+            unitId={Addsid.BANNER}
+            sizes={[BannerAdSize.FULL_BANNER]}
+            requestOptions={{
+              requestNonPersonalizedAdsOnly: true,
+            }}
+          />
+        </View>
       </ImageBackground>
     </SafeAreaView>
   );

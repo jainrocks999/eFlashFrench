@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   View,
   BackHandler,
+  Alert,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {height} from '../components/Diemenstions';
@@ -60,7 +61,10 @@ const Detials = props => {
   const [Images, setImages] = useState('');
   const [Title, setTitle] = useState({English: '', French: ''});
   const [count, setCount] = useState(0);
-  const [Music, setMusic] = useState();
+  const [Music, setMusic] = useState({
+    isActualSound: false,
+    Music: [],
+  });
   const navigation = useNavigation();
   useEffect(() => {
     getData();
@@ -167,12 +171,16 @@ const Detials = props => {
 
     setTitle(Titel);
     setImages(Imagess);
-    if (ActualSound?.length > 0 && setting.ActualVoice && setting.Voice) {
-      setMusic([track2, track]);
-    } else if (ActualSound && setting.ActualVoice) {
-      setMusic(track2);
+    if (ActualSound?.length > 0) {
+      setMusic({
+        isActualSound: true,
+        Music: [track2, track],
+      });
     } else {
-      setMusic(track);
+      setMusic({
+        isActualSound: false,
+        Music: [track],
+      });
     }
 
     if (isSetup) {
@@ -198,9 +206,23 @@ const Detials = props => {
     }
   }, [backSound.fromDetails == true]);
   const paly = async () => {
+    const isSetup = await setupPlayer();
     await TrackPlayer.reset();
-    await TrackPlayer.add(Music);
-    await TrackPlayer.play();
+
+    if (Music.isActualSound) {
+      if (setting.ActualVoice && setting.Voice) {
+        await TrackPlayer.add(Music.Music);
+      } else if (setting.ActualVoice) {
+        await TrackPlayer.add(Music.Music[0]);
+      } else {
+        await TrackPlayer.add(Music.Music[1]);
+      }
+    } else if (setting.Voice) {
+      await TrackPlayer.add(Music.Music);
+    }
+    if (isSetup) {
+      await TrackPlayer.play();
+    }
   };
 
   return (
@@ -265,19 +287,22 @@ const Detials = props => {
             {Images && (
               <Image
                 style={{
-                  height: height / 1.45,
+                  height: height / 1.6,
                   width: '100%',
                   alignItems: 'center',
                 }}
                 source={{
                   uri: Images,
-                  //${path}${'b'.replace(/\s+/g, ' ').trim()}.png
                 }}
                 resizeMode="contain"
               />
             )}
           </View>
-          <View style={styles.btnContainer}>
+          <View
+            style={[
+              styles.btnContainer,
+              !setting.Swipe ? {flexDirection: 'row'} : null,
+            ]}>
             {!setting.Swipe && (
               <TouchableOpacity
                 onPress={async () => {
@@ -302,7 +327,7 @@ const Detials = props => {
                 paly();
               }}>
               <Image
-                style={[styles.btn2, setting.Swipe && {marginLeft: '60%'}]}
+                style={[styles.btn2, setting.Swipe && {alignSelf: 'center'}]}
                 source={require('../../Assets4/btnrepeat_normal.png')}
                 resizeMode="contain"
               />
@@ -327,7 +352,7 @@ const Detials = props => {
               </TouchableOpacity>
             )}
           </View>
-          <View style={{position: 'absolute', bottom: 0}}>
+          <View style={{position: 'absolute', bottom: 0, alignSelf: 'center'}}>
             <BannerAd
               unitId={Addsid.BANNER}
               sizes={[BannerAdSize.FULL_BANNER]}
@@ -372,7 +397,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: '9%',
     width: '98%',
-    flexDirection: 'row',
     justifyContent: 'space-between',
     marginHorizontal: wp(1.5),
     alignSelf: 'center',

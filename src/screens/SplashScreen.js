@@ -1,6 +1,7 @@
 import {View, Text, Image} from 'react-native';
 import React, {startTransition, useEffect} from 'react';
 import {useNavigation, StackActions} from '@react-navigation/native';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 const SplashScreen = () => {
   const navigation = useNavigation();
@@ -10,12 +11,13 @@ const SplashScreen = () => {
     }, 2000);
   });
   return (
-    <View style={{flex: 1, marginHorizontal: 1}}>
+    <SafeAreaView
+      style={{flex: 1, marginHorizontal: 1, backgroundColor: '#d7f4ff'}}>
       <Image
         style={{height: '100%', width: '100%'}}
         source={require('../../Assets4/splash.png')}
       />
-    </View>
+    </SafeAreaView>
   );
 };
 

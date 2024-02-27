@@ -79,6 +79,7 @@ const NextScreen = ({route}) => {
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#73cbea'}}>
       <ImageBackground
+        resizeMode="stretch"
         style={{flex: 1}}
         source={require('../../Assets4/setting_screen.png')}>
         <Header onPress2={() => setMut(!mute)} mute={mute} />
@@ -178,7 +179,7 @@ const NextScreen = ({route}) => {
           </View>
         </View>
 
-        <View style={{position: 'absolute', bottom: 0}}>
+        <View style={{position: 'absolute', bottom: 0, alignSelf: 'center'}}>
           <BannerAd
             unitId={Addsid.BANNER}
             sizes={[BannerAdSize.FULL_BANNER]}

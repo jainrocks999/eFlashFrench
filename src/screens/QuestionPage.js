@@ -312,7 +312,7 @@ const QuestionPage = props => {
             />
           </View>
         </View>
-        <View style={{position: 'absolute', bottom: 0}}>
+        <View style={{position: 'absolute', bottom: 0, alignSelf: 'center'}}>
           <BannerAd
             unitId={Addsid.BANNER}
             sizes={[BannerAdSize.FULL_BANNER]}
