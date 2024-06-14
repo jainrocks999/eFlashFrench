@@ -10,8 +10,16 @@ import {
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
 
-const Header = ({onPress, onPress2, mute, home}) => {
+const Header = ({
+  onPress,
+  onPress2,
+  onPressPuchase,
+  mute,
+  hasPurchased,
+  home,
+}) => {
   const mt = useSelector(state => state.sound);
+
   const appState = useRef(AppState.currentState);
   const [appStateVisible, setAppStateVisible] = useState(appState.current);
   useEffect(() => {
@@ -84,6 +92,17 @@ const Header = ({onPress, onPress2, mute, home}) => {
           resizeMode="contain"
         />
       </TouchableOpacity>
+      {!hasPurchased && home ? (
+        <TouchableOpacity
+          onPress={onPressPuchase}
+          style={{height: '80%', width: '60%'}}>
+          <Image
+            style={{height: '100%', width: '100%'}}
+            source={require('../../Assets4/upgrade.png')}
+            resizeMode="contain"
+          />
+        </TouchableOpacity>
+      ) : null}
       {home && (
         <TouchableOpacity onPress={onPress}>
           <Image

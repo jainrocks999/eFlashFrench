@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {
   Image,
   StyleSheet,
@@ -31,12 +31,14 @@ import {
 import {Addsid} from './ads';
 import RNFS from 'react-native-fs';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import {IAPContext} from '../Context';
 
 const adUnit = Addsid.Interstitial;
 const requestOption = {
   requestNonPersonalizedAdsOnly: true,
 };
 const Detials = props => {
+  const {hasPurchased} = useContext(IAPContext);
   const tablet = isTablet();
   const backSound = useSelector(state => state.backSound);
   const disapatch = useDispatch();
@@ -164,7 +166,7 @@ const Detials = props => {
       navigation.goBack();
       return;
     } else {
-      getAdd();
+      !hasPurchased ? getAdd() : null;
       navigation.dispatch(StackActions.replace('next'));
       return;
     }
@@ -287,7 +289,7 @@ const Detials = props => {
             {Images && (
               <Image
                 style={{
-                  height: height / 1.6,
+                  height: hasPurchased ? height / 1.2 : height / 1.6,
                   width: '100%',
                   alignItems: 'center',
                 }}
@@ -300,7 +302,7 @@ const Detials = props => {
           </View>
           <View
             style={[
-              styles.btnContainer,
+              [styles.btnContainer, {bottom: hasPurchased ? '5%' : '9%'}],
               !setting.Swipe ? {flexDirection: 'row'} : null,
             ]}>
             {!setting.Swipe && (
@@ -352,15 +354,18 @@ const Detials = props => {
               </TouchableOpacity>
             )}
           </View>
-          <View style={{position: 'absolute', bottom: 0, alignSelf: 'center'}}>
-            <BannerAd
-              unitId={Addsid.BANNER}
-              sizes={[BannerAdSize.FULL_BANNER]}
-              requestOptions={{
-                requestNonPersonalizedAdsOnly: true,
-              }}
-            />
-          </View>
+          {!hasPurchased ? (
+            <View
+              style={{position: 'absolute', bottom: 0, alignSelf: 'center'}}>
+              <BannerAd
+                unitId={Addsid.BANNER}
+                sizes={[BannerAdSize.FULL_BANNER]}
+                requestOptions={{
+                  requestNonPersonalizedAdsOnly: true,
+                }}
+              />
+            </View>
+          ) : null}
         </View>
       </GestureRecognizer>
     </SafeAreaView>
@@ -390,7 +395,7 @@ const styles = StyleSheet.create({
   },
   imgContainer: {
     height: height,
-    marginTop: '5%',
+    marginTop: '2%',
     // marginLeft: 8,
   },
   btnContainer: {

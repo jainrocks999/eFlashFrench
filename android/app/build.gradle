@@ -90,17 +90,15 @@ def reactNativeArchitectures() {
 
 android {
     ndkVersion rootProject.ext.ndkVersion
-
     compileSdkVersion rootProject.ext.compileSdkVersion
-
     namespace "com.eFlashFrench"
-    
     defaultConfig {
         applicationId "com.eFlashFrench"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 17
-        versionName "2.6"
+        versionCode 22
+        versionName "3.1"
+        missingDimensionStrategy "store", "play"
     }
 
     splits {

@@ -5,13 +5,17 @@ import {
   BackHandler,
   StatusBar,
   LogBox,
+  View,
+  Button,
 } from 'react-native';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import MyStack from './src/components/MyStack';
 import {Provider} from 'react-redux';
 import myStore from './src/reduxToolkit/MyStore';
 import {InterstitialAd, AdEventType} from 'react-native-google-mobile-ads';
 import {Addsid} from './src/screens/ads';
+import IAPProvider from './src/Context';
+
 const App = () => {
   LogBox.ignoreAllLogs();
   const appState = useRef(AppState.currentState);
@@ -20,15 +24,15 @@ const App = () => {
   });
 
   const showAdd = () => {
-    const unsubscribe = interstitial.addAdEventListener(
-      AdEventType.LOADED,
-      () => {
-        interstitial.show();
-        setCount(2);
-      },
-    );
-    interstitial.load();
-    return unsubscribe;
+    // const unsubscribe = interstitial.addAdEventListener(
+    //   AdEventType.LOADED,
+    //   () => {
+    //     interstitial.show();
+    //     setCount(2);
+    //   },
+    // );
+    // interstitial.load();
+    // return unsubscribe;
   };
   const [appStateVisible, setAppStateVisible] = useState(false);
   const [count, setCount] = useState(1);
@@ -55,7 +59,7 @@ const App = () => {
   }, [appStateVisible]);
 
   function handleBackButtonClick() {
-    showAdd1();
+    // showAdd1();
 
     return true;
   }
@@ -87,10 +91,20 @@ const App = () => {
   }, []);
 
   return (
-    <Provider store={myStore}>
-      <StatusBar backgroundColor="#73cbea" />
-      <MyStack />
-    </Provider>
+    <IAPProvider>
+      <Provider store={myStore}>
+        <StatusBar backgroundColor="#73cbea" />
+        <MyStack />
+      </Provider>
+    </IAPProvider>  
+    // <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+    //   <Button
+    //     onPress={() => {
+    //       requestPurchases(constants.productSkus);
+    //     }}
+    //     title="purchase"
+    //   />
+    // </View>
   );
 };
 

@@ -6,7 +6,7 @@ import {
   BackHandler,
   AppState,
 } from 'react-native';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {FlatList, RectButton, ScrollView} from 'react-native-gesture-handler';
 import {height, width} from '../components/Diemenstions';
@@ -32,6 +32,7 @@ import {
 import {Addsid} from './ads';
 import RNFS from 'react-native-fs';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import {IAPContext} from '../Context';
 const authId = Addsid.Interstitial;
 const requestOption = {
   requestNonPersonalizedAdsOnly: true,
@@ -42,6 +43,7 @@ const path = Platform.select({
   ios: RNFS.MainBundlePath + '/files/',
 });
 const QuestionPage = props => {
+  const {hasPurchased} = useContext(IAPContext);
   const interstitial = InterstitialAd.createForAdRequest(authId, requestOption);
   const tablet = isTablet();
   const backSound = useSelector(state => state.backSound);
@@ -88,7 +90,7 @@ const QuestionPage = props => {
     setCount(count + 1);
 
     if (count > 8) {
-      showAdd();
+      !hasPurchased ? showAdd() : null;
       setCount(0);
     }
     let arr = [
@@ -312,15 +314,17 @@ const QuestionPage = props => {
             />
           </View>
         </View>
-        <View style={{position: 'absolute', bottom: 0, alignSelf: 'center'}}>
-          <BannerAd
-            unitId={Addsid.BANNER}
-            sizes={[BannerAdSize.FULL_BANNER]}
-            requestOptions={{
-              requestNonPersonalizedAdsOnly: true,
-            }}
-          />
-        </View>
+        {!hasPurchased ? (
+          <View style={{position: 'absolute', bottom: 0, alignSelf: 'center'}}>
+            <BannerAd
+              unitId={Addsid.BANNER}
+              sizes={[BannerAdSize.FULL_BANNER]}
+              requestOptions={{
+                requestNonPersonalizedAdsOnly: true,
+              }}
+            />
+          </View>
+        ) : null}
       </View>
     </SafeAreaView>
   );

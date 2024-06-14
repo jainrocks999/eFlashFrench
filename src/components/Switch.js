@@ -1,9 +1,12 @@
 import {View, Text, Image, StyleSheet} from 'react-native';
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {TouchableOpacity} from 'react-native';
 
 import {isTablet} from 'react-native-device-info';
+import {IAPContext} from '../Context';
+
 const Switch = ({style, text, sw, onPress, ...props}) => {
+  const {hasPurchased} = useContext(IAPContext);
   const [TogleSwitch, setTougleSwit] = useState(false);
   const Tablet = isTablet();
   return (
@@ -13,7 +16,14 @@ const Switch = ({style, text, sw, onPress, ...props}) => {
       </View>
       <TouchableOpacity {...props} onPress={onPress} style={styles.pressable}>
         <Image
-          style={Tablet ? {height: 50, width: 90} : styles.pre}
+          style={
+            Tablet
+              ? {height: hasPurchased ? 50 : 40, width: hasPurchased ? 90 : 70}
+              : {
+                  height: hasPurchased ? 35 : 32,
+                  width: hasPurchased ? 50 : 45,
+                }
+          }
           source={
             sw
               ? require('../../Assets4/on.png')

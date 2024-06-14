@@ -5,7 +5,7 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Header from '../components/Header';
 import {useSelector, useDispatch} from 'react-redux';
@@ -27,7 +27,9 @@ const db = SQLite.openDatabase({
 });
 import {BannerAd, BannerAdSize, TestIds} from 'react-native-google-mobile-ads';
 import {Addsid} from './ads';
+import {IAPContext} from '../Context';
 const NextScreen = ({route}) => {
+  const {hasPurchased} = useContext(IAPContext);
   const navigation = useNavigation();
   const item = useSelector(state => state?.catdata);
   console.log('this is item', item);
@@ -179,15 +181,17 @@ const NextScreen = ({route}) => {
           </View>
         </View>
 
-        <View style={{position: 'absolute', bottom: 0, alignSelf: 'center'}}>
-          <BannerAd
-            unitId={Addsid.BANNER}
-            sizes={[BannerAdSize.FULL_BANNER]}
-            requestOptions={{
-              requestNonPersonalizedAdsOnly: true,
-            }}
-          />
-        </View>
+        {!hasPurchased ? (
+          <View style={{position: 'absolute', bottom: 0, alignSelf: 'center'}}>
+            <BannerAd
+              unitId={Addsid.BANNER}
+              sizes={[BannerAdSize.FULL_BANNER]}
+              requestOptions={{
+                requestNonPersonalizedAdsOnly: true,
+              }}
+            />
+          </View>
+        ) : null}
       </ImageBackground>
     </SafeAreaView>
   );
