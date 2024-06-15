@@ -285,7 +285,7 @@ const Detials = props => {
               />
             </TouchableOpacity>
           </View>
-          <View style={styles.imgContainer}>
+          <View style={[styles.imgContainer,]}>
             {Images && (
               <Image
                 style={{

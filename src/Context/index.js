@@ -3,11 +3,13 @@ import * as RNIap from 'react-native-iap';
 import {constants} from '../constansts';
 import {Alert} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {Platform} from 'react-native';
 
 export const IAPContext = createContext();
 
 const IAPProvider = ({children}) => {
   const [hasPurchased, setHasPurchased] = useState(false);
+  console.log(constants);
   const [products, setProducts] = useState([]);
   const [visible, setVisible] = useState(false);
   useEffect(() => {
@@ -120,7 +122,18 @@ const IAPProvider = ({children}) => {
   }, []);
   const requestPurchase = async () => {
     try {
-      const pucrs = await RNIap.requestPurchase({skus: constants.productSkus});
+      const skus = {
+        ...Platform.select({
+          android: {
+            skus: constants.productSkus,
+          },
+          ios: {
+            sku: constants.productSkus[0],
+          },
+        }),
+      };
+
+      const pucrs = await RNIap.requestPurchase(skus);
     } catch (error) {
       Alert.alert('Message', error.message);
     }
