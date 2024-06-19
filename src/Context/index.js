@@ -9,7 +9,8 @@ export const IAPContext = createContext();
 
 const IAPProvider = ({children}) => {
   const [hasPurchased, setHasPurchased] = useState(false);
-  console.log(constants);
+  // console.log(constants);
+  // console.log(constants);
   const [products, setProducts] = useState([]);
   const [visible, setVisible] = useState(false);
   useEffect(() => {
