@@ -4,6 +4,7 @@ import {
   ImageBackground,
   TouchableOpacity,
   Image,
+  StatusBar,
 } from 'react-native';
 import React, {useContext, useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
@@ -80,6 +81,7 @@ const NextScreen = ({route}) => {
   const [mute, setMut] = useState(muted);
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#73cbea'}}>
+      <StatusBar backgroundColor="#73cbea" />
       <ImageBackground
         resizeMode="stretch"
         style={{flex: 1}}

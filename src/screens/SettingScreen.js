@@ -8,6 +8,7 @@ import {
   BackHandler,
   Alert,
   ScrollView,
+  StatusBar,
 } from 'react-native';
 import {height, width} from '../components/Diemenstions';
 import React, {useContext, useEffect, useState} from 'react';
@@ -169,6 +170,7 @@ const SettingScreen = props => {
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#73cbea'}}>
+      <StatusBar backgroundColor="#73cbea" />
       <ImageBackground
         resizeMode="stretch"
         style={{flex: 1}}

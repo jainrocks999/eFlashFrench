@@ -7,6 +7,7 @@ import {
   View,
   BackHandler,
   Alert,
+  StatusBar,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {height} from '../components/Diemenstions';
@@ -229,6 +230,7 @@ const Detials = props => {
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: 'grey'}}>
+      <StatusBar backgroundColor="grey" />
       <GestureRecognizer
         style={{flex: 1}}
         onSwipeLeft={() =>
@@ -285,7 +287,7 @@ const Detials = props => {
               />
             </TouchableOpacity>
           </View>
-          <View style={[styles.imgContainer,]}>
+          <View style={[styles.imgContainer]}>
             {Images && (
               <Image
                 style={{
