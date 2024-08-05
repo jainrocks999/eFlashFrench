@@ -4,6 +4,7 @@ import {constants} from '../constansts';
 import {Alert} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Platform} from 'react-native';
+import errorMsg from './errorMsg';
 
 export const IAPContext = createContext();
 
@@ -136,7 +137,7 @@ const IAPProvider = ({children}) => {
 
       const pucrs = await RNIap.requestPurchase(skus);
     } catch (error) {
-      Alert.alert('Message', error.message);
+      Alert.alert('Message', errorMsg(error.code));
     }
   };
 

@@ -15,7 +15,6 @@
 		18A485652B7A5EB200CF84E1 /* files in Resources */ = {isa = PBXBuildFile; fileRef = 18A485642B7A5EB100CF84E1 /* files */; };
 		18A485672B7A5EE400CF84E1 /* www in Resources */ = {isa = PBXBuildFile; fileRef = 18A485662B7A5EE300CF84E1 /* www */; };
 		18BDE1C62C1D674800EB70B7 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18A813E22C1C80CD00D9A7A6 /* StoreKit.framework */; };
-		18BDE1C72C1D674800EB70B7 /* StoreKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 18A813E22C1C80CD00D9A7A6 /* StoreKit.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		7699B88040F8A987B510C191 /* libPods-Baby_Flashcards-Baby_FlashcardsTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-Baby_Flashcards-Baby_FlashcardsTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
@@ -29,20 +28,6 @@
 			remoteInfo = Baby_Flashcards;
 		};
 /* End PBXContainerItemProxy section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		18BDE1C82C1D674800EB70B7 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				18BDE1C72C1D674800EB70B7 /* StoreKit.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		00E356EE1AD99517003FC87E /* Baby_FlashcardsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Baby_FlashcardsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -210,7 +195,6 @@
 				00EEFC60759A1932668264C0 /* [CP] Embed Pods Frameworks */,
 				E235C05ADACE081382539298 /* [CP] Copy Pods Resources */,
 				178F3158ECBECF17B4E1BE38 /* [CP-User] [RNGoogleMobileAds] Configuration */,
-				18BDE1C82C1D674800EB70B7 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -527,7 +511,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = MM8CWENXY2;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Baby_Flashcards/Info.plist;
@@ -560,7 +544,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = MM8CWENXY2;
 				INFOPLIST_FILE = Baby_Flashcards/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -656,7 +640,8 @@
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
-					" ",
+					"-Wl",
+					"-ld_classic",
 				);
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
@@ -729,7 +714,8 @@
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
-					" ",
+					"-Wl",
+					"-ld_classic",
 				);
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
